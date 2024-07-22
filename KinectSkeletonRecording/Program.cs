@@ -19,10 +19,33 @@ namespace KinectSkeletonRecording
             // Start the sensor
             sensor.Start();
 
-            // Create a file to record the skeleton data
-            fileWriter = new StreamWriter("SkeletonData.txt");
+            // Create a CSV file to record the skeleton data
+            fileWriter = new StreamWriter("SkeletonData.csv");
 
-            Console.WriteLine("Recording skeleton data. Press any key to stop...");
+            // Write CSV header
+            fileWriter.WriteLine("Timestamp,TrackingID," + 
+                "HeadX,HeadY,HeadZ," +
+                "ShoulderCenterX,ShoulderCenterY,ShoulderCenterZ," +
+                "ShoulderLeftX,ShoulderLeftY,ShoulderLeftZ," +
+                "ShoulderRightX,ShoulderRightY,ShoulderRightZ," +
+                "ElbowLeftX,ElbowLeftY,ElbowLeftZ," +
+                "ElbowRightX,ElbowRightY,ElbowRightZ," +
+                "WristLeftX,WristLeftY,WristLeftZ," +
+                "WristRightX,WristRightY,WristRightZ," +
+                "HandLeftX,HandLeftY,HandLeftZ," +
+                "HandRightX,HandRightY,HandRightZ," +
+                "SpineX,SpineY,SpineZ," +
+                "HipCenterX,HipCenterY,HipCenterZ," +
+                "HipLeftX,HipLeftY,HipLeftZ," +
+                "HipRightX,HipRightY,HipRightZ," +
+                "KneeLeftX,KneeLeftY,KneeLeftZ," +
+                "KneeRightX,KneeRightY,KneeRightZ," +
+                "AnkleLeftX,AnkleLeftY,AnkleLeftZ," +
+                "AnkleRightX,AnkleRightY,AnkleRightZ," +
+                "FootLeftX,FootLeftY,FootLeftZ," +
+                "FootRightX,FootRightY,FootRightZ");
+
+            Console.WriteLine("Recording skeleton data to CSV. Press any key to stop...");
             Console.ReadKey();
 
             // Stop the sensor
@@ -43,9 +66,16 @@ namespace KinectSkeletonRecording
                     {
                         if (skel.TrackingState == SkeletonTrackingState.Tracked)
                         {
-                            // Record the skeleton data
-                            // Test data: Timestamp, trackingID, positionX, positionY, positionZ
-                            fileWriter.WriteLine($"{DateTime.Now}, {skel.TrackingId}, {skel.Position.X}, {skel.Position.Y}, {skel.Position.Z}");
+                            fileWriter.Write($"{DateTime.Now},{skel.TrackingId},");
+
+                            // Record the position of each joint
+                            foreach (Joint joint in skel.Joints)
+                            {
+                                fileWriter.Write($"{joint.Position.X},{joint.Position.Y},{joint.Position.Z},");
+                            }
+
+                            // Remove the trailing comma and add a newline
+                            fileWriter.WriteLine();
                         }
                     }
                 }
