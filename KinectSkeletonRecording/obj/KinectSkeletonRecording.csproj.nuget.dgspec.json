@@ -1,0 +1,55 @@
+{
+  "format": 1,
+  "restore": {
+    "C:\\Users\\anshi\\code\\pgss-folder\\kinect-testing\\KinectSkeletonRecording\\KinectSkeletonRecording.csproj": {}
+  },
+  "projects": {
+    "C:\\Users\\anshi\\code\\pgss-folder\\kinect-testing\\KinectSkeletonRecording\\KinectSkeletonRecording.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\anshi\\code\\pgss-folder\\kinect-testing\\KinectSkeletonRecording\\KinectSkeletonRecording.csproj",
+        "projectName": "KinectSkeletonRecording",
+        "projectPath": "C:\\Users\\anshi\\code\\pgss-folder\\kinect-testing\\KinectSkeletonRecording\\KinectSkeletonRecording.csproj",
+        "packagesPath": "C:\\Users\\anshi\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\anshi\\code\\pgss-folder\\kinect-testing\\KinectSkeletonRecording\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\anshi\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net472"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net472": {
+            "targetAlias": "net472",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        }
+      },
+      "frameworks": {
+        "net472": {
+          "targetAlias": "net472",
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.303\\RuntimeIdentifierGraph.json"
+        }
+      },
+      "runtimes": {
+        "win7-x86": {
+          "#import": []
+        }
+      }
+    }
+  }
+}
