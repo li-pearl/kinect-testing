@@ -24,26 +24,27 @@ namespace KinectSkeletonRecording
 
             // Write CSV header
             fileWriter.WriteLine("Timestamp,TrackingID," + 
+                "SpineBaseX,SpineBaseY,SpineBaseZ," +
+                "SpineMidX,SpineMidY,SpineMidZ," +
+                "NeckX,NeckY,NeckZ," +
                 "HeadX,HeadY,HeadZ," +
-                "ShoulderCenterX,ShoulderCenterY,ShoulderCenterZ," +
                 "ShoulderLeftX,ShoulderLeftY,ShoulderLeftZ," +
-                "ShoulderRightX,ShoulderRightY,ShoulderRightZ," +
                 "ElbowLeftX,ElbowLeftY,ElbowLeftZ," +
-                "ElbowRightX,ElbowRightY,ElbowRightZ," +
                 "WristLeftX,WristLeftY,WristLeftZ," +
-                "WristRightX,WristRightY,WristRightZ," +
                 "HandLeftX,HandLeftY,HandLeftZ," +
+                "ShoulderRightX,ShoulderRightY,ShoulderRightZ," +
+                "ElbowRightX,ElbowRightY,ElbowRightZ," +
+                "WristRightX,WristRightY,WristRightZ," +
                 "HandRightX,HandRightY,HandRightZ," +
-                "SpineX,SpineY,SpineZ," +
-                "HipCenterX,HipCenterY,HipCenterZ," +
                 "HipLeftX,HipLeftY,HipLeftZ," +
-                "HipRightX,HipRightY,HipRightZ," +
                 "KneeLeftX,KneeLeftY,KneeLeftZ," +
-                "KneeRightX,KneeRightY,KneeRightZ," +
                 "AnkleLeftX,AnkleLeftY,AnkleLeftZ," +
-                "AnkleRightX,AnkleRightY,AnkleRightZ," +
-                "FootLeftX,FootLeftY,FootLeftZ," +
-                "FootRightX,FootRightY,FootRightZ");
+                "FootRightX,FootRightY,FootRightZ," +
+                "SpineShoulderX,SpineShoulderY,SpineShoulderZ," +
+                "HandTipLeftX,HandTipLeftY,HandTipLeftZ," +
+                "ThumbLeftX,ThumbLeftY,ThumbLeftZ," +
+                "HandTipRightX,HandTipRightY,HandTipRightZ," +
+                "ThumbRightX,ThumbRightY,ThumbRightZ");
 
 // # SpineBase: 0
 // # SpineMid: 1

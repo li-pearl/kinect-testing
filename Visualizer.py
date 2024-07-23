@@ -1,57 +1,101 @@
 import pandas as pd
 import matplotlib.pyplot as plt
-from matplotlib.animation import FuncAnimation
+import matplotlib.animation as animation
 
-# Load the CSV data
-df = pd.read_csv('KinectSkeletonRecording/SkeletonData.csv')
+# Load the CSV file
+data_file = 'SkeletonData.csv'
+data = pd.read_csv(data_file)
 
-# Define joint connections
-
-
-
-connections = [
-    ('WristLeftX', 'HandLeftX', 'WristLeftY', 'HandLeftY'),
-    ('WristRightX', 'HandRightX', 'WristRightY', 'HandRightY'),
-    ('ShoulderCenterX', 'SpineX', 'ShoulderCenterY', 'SpineY'),
-    ('SpineX', 'HipCenterX', 'SpineY', 'HipCenterY'),
-    ('HipCenterX', 'HipLeftX', 'HipCenterY', 'HipLeftY'),
-    ('HipCenterX', 'HipRightX', 'HipCenterY', 'HipRightY'),
-    ('HipLeftX', 'KneeLeftX', 'HipLeftY', 'KneeLeftY'),
-    ('ShoulderLeftX', 'ElbowLeftX', 'ShoulderLeftY', 'ElbowLeftY'),
-    ('ElbowLeftX', 'WristLeftX', 'ElbowLeftY', 'WristLeftY'),
-    ('ShoulderRightX', 'ElbowRightX', 'ShoulderRightY', 'ElbowRightY'),
-    ('ElbowRightX', 'WristRightX', 'ElbowRightY', 'WristRightY'),
-    ('HipRightX', 'KneeRightX', 'HipRightY', 'KneeRightY'),
-    ('KneeRightX', 'AnkleRightX', 'KneeRightY', 'AnkleRightY'),
-    ('HipLeftX', 'KneeLeftX', 'HipLeftY', 'KneeLeftY'),
-    ('KneeLeftX', 'AnkleLeftX', 'KneeLeftY', 'AnkleLeftY'),
-    ('ShoulderCenterX', 'HeadX', 'ShoulderCenterY', 'HeadY')
-]
-
+# Create a figure and axis for the plot
 fig, ax = plt.subplots()
+ax.set_xlim(-2, 2)  # Adjust these limits based on your data range
+ax.set_ylim(-2, 2)  # Adjust these limits based on your data range
 ax.set_aspect('equal')
-ax.set_xlabel('X Position')
-ax.set_ylabel('Y Position')
 
-def update(frame_number):
-    ax.clear()  # Clear the previous frame
-    row = df.iloc[frame_number]  # Get the current frame's data
-    joint_positions = {}  # Store joint positions to label them
+# Initialize lists to store the joint positions
+lines = []
+joint_positions = {
+    'SpineBase': (0, 1),
+    'SpineMid': (0, 2),
+    'Neck': (0, 3), 
+    'Head': (0, 4),
+    'ShoulderLeft': (0, 5),
+    'ElbowLeft': (0, 6),
+    'WristLeft': (0, 7),
+    'HandLeft': (0, 8),
+    'ShoulderRight': (0, 9),
+    'ElbowRight': (0, 10),
+    'WristRight': (0, 11),
+    'HandRight': (0, 12),
+    'HipLeft': (0, 13),
+    'KneeLeft': (0, 14),
+    'AnkleLeft': (0, 15),
+    'FootLeft': (0, 16),
+    'HipRight': (0, 17),
+    'KneeRight': (0, 18),
+    'AnkleRight': (0, 19),
+    'FootRight': (0, 20),
+    'SpineShoulder': (0, 21),
+    'HandTipLeft': (0, 22),
+    'ThumbLeft': (0, 23),
+    'HandTipRight': (0, 24),
+    'ThumbRight': (0, 25)
+}
 
-    # Plot each connection and store joint positions
-    for start_x, end_x, start_y, end_y in connections:
-        ax.plot([row[start_x], row[end_x]], [row[start_y], row[end_y]], 'ro-')
-        joint_positions[start_x[:-1]] = (row[start_x], row[start_y])  # Remove 'X' from name, store position
-        joint_positions[end_x[:-1]] = (row[end_x], row[end_y])  # Remove 'X' from name, store position
+def update_plot(frame):
+    ax.clear()
+    ax.set_xlim(-2, 2)  # Adjust these limits based on your data range
+    ax.set_ylim(-2, 2)  # Adjust these limits based on your data range
+    ax.set_aspect('equal')
 
-    # Label each joint
-    for joint, (x, y) in joint_positions.items():
-        ax.text(x, y, joint, fontsize=9, ha='right', va='bottom')  # Adjust text alignment as needed
+    # Get the frame data
+    if frame >= len(data):
+        return
+    frame_data = data.iloc[frame]
 
-    # Set the plot limits
-    ax.set_xlim(df[['WristLeftX', 'HandLeftX', 'WristRightX', 'HandRightX', 'ShoulderCenterX', 'SpineX', 'HipCenterX', 'HipLeftX', 'HipRightX', 'KneeLeftX', 'ShoulderLeftX', 'ElbowLeftX', 'ShoulderRightX', 'ElbowRightX', 'KneeRightX', 'AnkleRightX', 'AnkleLeftX', 'HeadX']].min().min(), df[['WristLeftX', 'HandLeftX', 'WristRightX', 'HandRightX', 'ShoulderCenterX', 'SpineX', 'HipCenterX', 'HipLeftX', 'HipRightX', 'KneeLeftX', 'ShoulderLeftX', 'ElbowLeftX', 'ShoulderRightX', 'ElbowRightX', 'KneeRightX', 'AnkleRightX', 'AnkleLeftX', 'HeadX']].max().max())
-    ax.set_ylim(df[['WristLeftY', 'HandLeftY', 'WristRightY', 'HandRightY', 'ShoulderCenterY', 'SpineY', 'HipCenterY', 'HipLeftY', 'HipRightY', 'KneeLeftY', 'ShoulderLeftY', 'ElbowLeftY', 'ShoulderRightY', 'ElbowRightY', 'KneeRightY', 'AnkleRightY', 'AnkleLeftY', 'HeadY']].min().min(), df[['WristLeftY', 'HandLeftY', 'WristRightY', 'HandRightY', 'ShoulderCenterY', 'SpineY', 'HipCenterY', 'HipLeftY', 'HipRightY', 'KneeLeftY', 'ShoulderLeftY', 'ElbowLeftY', 'ShoulderRightY', 'ElbowRightY', 'KneeRightY', 'AnkleRightY', 'AnkleLeftY', 'HeadY']].max().max())
+    # Plot each joint
+    for joint, index in joint_positions.items():
+        if joint in frame_data:
+            x = frame_data[f'{joint}X']
+            y = frame_data[f'{joint}Y']
+            ax.plot(x, y, 'o', label=joint)
+        else:
+            print(f"Missing data for {joint}")
 
-ani = FuncAnimation(fig, update, frames=len(df), repeat=False)
+    # Draw lines between connected joints (e.g., spine, arms, legs)
+    connections = [
+        ('SpineBase', 'SpineMid'),
+        ('SpineMid', 'Neck'),
+        ('Neck', 'Head'),
+        ('ShoulderLeft', 'ElbowLeft'),
+        ('ElbowLeft', 'WristLeft'),
+        ('WristLeft', 'HandLeft'),
+        ('ShoulderRight', 'ElbowRight'),
+        ('ElbowRight', 'WristRight'),
+        ('WristRight', 'HandRight'),
+        ('HipLeft', 'KneeLeft'),
+        ('KneeLeft', 'AnkleLeft'),
+        ('AnkleLeft', 'FootLeft'),
+        ('HipRight', 'KneeRight'),
+        ('KneeRight', 'AnkleRight'),
+        ('AnkleRight', 'FootRight'),
+        ('SpineMid', 'SpineShoulder'),
+        ('HandTipLeft', 'ThumbLeft'),
+        ('HandTipRight', 'ThumbRight')
+    ]
+
+    for start, end in connections:
+        if start in joint_positions and end in joint_positions:
+            if f'{start}X' in frame_data and f'{end}X' in frame_data:
+                x_start = frame_data[f'{start}X']
+                y_start = frame_data[f'{start}Y']
+                x_end = frame_data[f'{end}X']
+                y_end = frame_data[f'{end}Y']
+                ax.plot([x_start, x_end], [y_start, y_end], 'k-')
+
+    return lines
+
+# Set up the animation
+ani = animation.FuncAnimation(fig, update_plot, frames=len(data), interval=100, repeat=True)
 
 plt.show()
