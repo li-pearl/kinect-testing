@@ -4,7 +4,7 @@ using Microsoft.Kinect;
 
 namespace KinectSkeletonRecording
 {
-    class Program
+    class Recorder
     {
         static KinectSensor sensor;
         static StreamWriter fileWriter;
