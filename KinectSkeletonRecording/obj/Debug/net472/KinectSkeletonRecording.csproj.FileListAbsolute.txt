@@ -1,5 +1,6 @@
 C:\Users\anshi\code\pgss-folder\kinect-testing\KinectSkeletonRecording\bin\Debug\net472\KinectSkeletonRecording.exe
 C:\Users\anshi\code\pgss-folder\kinect-testing\KinectSkeletonRecording\bin\Debug\net472\KinectSkeletonRecording.exe.config
+C:\Users\anshi\code\pgss-folder\kinect-testing\KinectSkeletonRecording\bin\Debug\net472\KinectSkeletonRecording.pdb
 C:\Users\anshi\code\pgss-folder\kinect-testing\KinectSkeletonRecording\bin\Debug\net472\Microsoft.Kinect.dll
 C:\Users\anshi\code\pgss-folder\kinect-testing\KinectSkeletonRecording\bin\Debug\net472\Microsoft.Kinect.xml
 C:\Users\anshi\code\pgss-folder\kinect-testing\KinectSkeletonRecording\obj\Debug\net472\KinectSkeletonRecording.csproj.AssemblyReference.cache
@@ -11,4 +12,3 @@ C:\Users\anshi\code\pgss-folder\kinect-testing\KinectSkeletonRecording\obj\Debug
 C:\Users\anshi\code\pgss-folder\kinect-testing\KinectSkeletonRecording\obj\Debug\net472\KinectSk.48C77AB8.Up2Date
 C:\Users\anshi\code\pgss-folder\kinect-testing\KinectSkeletonRecording\obj\Debug\net472\KinectSkeletonRecording.exe
 C:\Users\anshi\code\pgss-folder\kinect-testing\KinectSkeletonRecording\obj\Debug\net472\KinectSkeletonRecording.pdb
-C:\Users\anshi\code\pgss-folder\kinect-testing\KinectSkeletonRecording\bin\Debug\net472\KinectSkeletonRecording.pdb
