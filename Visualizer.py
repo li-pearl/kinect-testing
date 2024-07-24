@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 import matplotlib.animation as animation
 
 # Load the CSV file
-data_file = r'C:\Users\anshi\code\pgss-folder\kinect-testing\KinectSkeletonRecording\trip_dancing.csv'
+data_file = r'C:\Users\anshi\code\pgss-folder\kinect-testing\KinectSkeletonRecording\lukas_walk_10ft.csv'
 data = pd.read_csv(data_file)
 
 # Create a figure and axis for the plot
