@@ -5,12 +5,12 @@ using Microsoft.Kinect;
 
 namespace KinectSkeletonRecording
 {
-    class TimedRecorder
+    class Recorder
     {
         static KinectSensor sensor;
         static StreamWriter fileWriter;
         static Timer timer;
-        static bool recording = true;
+        static bool recording = false;
 
         static void Main(string[] args)
         {
@@ -18,12 +18,12 @@ namespace KinectSkeletonRecording
             Console.Write("Enter the name of the CSV file: ");
             string csvFileName = Console.ReadLine() + ".csv";
 
-            // Ask user for the recording duration in seconds
+            // Prompt for recording duration in seconds
             Console.Write("Enter the recording duration in seconds: ");
             double recordingDurationSeconds = Convert.ToDouble(Console.ReadLine());
             double recordingDurationMilliseconds = SecondsToMilliseconds(recordingDurationSeconds);
 
-            // Does user want to start recording
+            // Ask if the user wants to start recording
             Console.Write("Do you want to start recording? (y/n): ");
             string startRecording = Console.ReadLine().ToLower();
 
@@ -39,60 +39,74 @@ namespace KinectSkeletonRecording
                 return;
             }
 
-            Console.WriteLine($"Recording duration: {recordingDurationSeconds} seconds.");
-            Console.WriteLine("Recording skeleton data to CSV...");
-
-            // Initialize Kinect Sensor
-            sensor = KinectSensor.KinectSensors[0];
-            sensor.SkeletonStream.Enable();
-            sensor.SkeletonFrameReady += Sensor_SkeletonFrameReady;
-
-            sensor.Start();
-
-            // Create a new CSV file to record the skeleton data
-            fileWriter = new StreamWriter(csvFileName);
-
-            // Write CSV header (the order here is very important for the visualizing process)
-            fileWriter.WriteLine("Timestamp,TrackingID," +
-                "SpineBaseX,SpineBaseY,SpineBaseZ," +
-                "SpineMidX,SpineMidY,SpineMidZ," +
-                "NeckX,NeckY,NeckZ," +
-                "HeadX,HeadY,HeadZ," +
-                "ShoulderLeftX,ShoulderLeftY,ShoulderLeftZ," +
-                "ElbowLeftX,ElbowLeftY,ElbowLeftZ," +
-                "WristLeftX,WristLeftY,WristLeftZ," +
-                "HandLeftX,HandLeftY,HandLeftZ," +
-                "ShoulderRightX,ShoulderRightY,ShoulderRightZ," +
-                "ElbowRightX,ElbowRightY,ElbowRightZ," +
-                "WristRightX,WristRightY,WristRightZ," +
-                "HandRightX,HandRightY,HandRightZ," +
-                "HipLeftX,HipLeftY,HipLeftZ," +
-                "KneeLeftX,KneeLeftY,KneeLeftZ," +
-                "AnkleLeftX,AnkleLeftY,AnkleLeftZ," +
-                "FootLeftX,FootLeftY,FootLeftZ," +
-                "HipRightX,HipRightY,HipRightZ," +
-                "KneeRightX,KneeRightY,KneeRightZ," +
-                "AnkleRightX,AnkleRightY,AnkleRightZ," +
-                "FootRightX,FootRightY,FootRightZ," +
-                "SpineShoulderX,SpineShoulderY,SpineShoulderZ," +
-                "HandTipLeftX,HandTipLeftY,HandTipLeftZ," +
-                "ThumbLeftX,ThumbLeftY,ThumbLeftZ," +
-                "HandTipRightX,HandTipRightY,HandTipRightZ," +
-                "ThumbRightX,ThumbRightY,ThumbRightZ");
-
-            // Set up the timer
-            timer = new Timer(recordingDurationMilliseconds);
-            timer.Elapsed += TimerElapsed;
-            timer.AutoReset = false;
-            timer.Start();
-
-            Console.WriteLine("Recording started. Press any key to stop manually...");
-            Console.ReadKey();
-
-            // Stop the sensor if still recording
-            if (recording)
+            if (startRecording == "y")
             {
-                StopRecording();
+                Console.WriteLine($"Recording duration: {recordingDurationSeconds} seconds.");
+                Console.WriteLine("Recording skeleton data to CSV...");
+
+                // Initialize Kinect Sensor
+                sensor = KinectSensor.KinectSensors[0];
+                sensor.SkeletonStream.Enable();
+                sensor.SkeletonFrameReady += Sensor_SkeletonFrameReady;
+
+                // Start the sensor
+                sensor.Start();
+
+                // Create a CSV file to record the skeleton data
+                fileWriter = new StreamWriter(csvFileName);
+
+                // Write CSV header. The order matters for visualization and data processing!
+                fileWriter.WriteLine("Timestamp,TrackingID," +
+                    "SpineBaseX,SpineBaseY,SpineBaseZ," +
+                    "SpineMidX,SpineMidY,SpineMidZ," +
+                    "NeckX,NeckY,NeckZ," +
+                    "HeadX,HeadY,HeadZ," +
+                    "ShoulderLeftX,ShoulderLeftY,ShoulderLeftZ," +
+                    "ElbowLeftX,ElbowLeftY,ElbowLeftZ," +
+                    "WristLeftX,WristLeftY,WristLeftZ," +
+                    "HandLeftX,HandLeftY,HandLeftZ," +
+                    "ShoulderRightX,ShoulderRightY,ShoulderRightZ," +
+                    "ElbowRightX,ElbowRightY,ElbowRightZ," +
+                    "WristRightX,WristRightY,WristRightZ," +
+                    "HandRightX,HandRightY,HandRightZ," +
+                    "HipLeftX,HipLeftY,HipLeftZ," +
+                    "KneeLeftX,KneeLeftY,KneeLeftZ," +
+                    "AnkleLeftX,AnkleLeftY,AnkleLeftZ," +
+                    "FootLeftX,FootLeftY,FootLeftZ," +
+                    "HipRightX,HipRightY,HipRightZ," +
+                    "KneeRightX,KneeRightY,KneeRightZ," +
+                    "AnkleRightX,AnkleRightY,AnkleRightZ," +
+                    "FootRightX,FootRightY,FootRightZ," +
+                    "SpineShoulderX,SpineShoulderY,SpineShoulderZ," +
+                    "HandTipLeftX,HandTipLeftY,HandTipLeftZ," +
+                    "ThumbLeftX,ThumbLeftY,ThumbLeftZ," +
+                    "HandTipRightX,HandTipRightY,HandTipRightZ," +
+                    "ThumbRightX,ThumbRightY,ThumbRightZ");
+
+                // Set up the timer
+                timer = new Timer(recordingDurationMilliseconds);
+                timer.Elapsed += TimerElapsed;
+                timer.AutoReset = false;
+                timer.Start();
+
+                // Set recording flag
+                recording = true;
+
+                Console.WriteLine("Recording started. Press any key to stop manually...");
+                Console.ReadKey();
+
+                // Stop the sensor if still recording
+                if (recording)
+                {
+                    StopRecording();
+                }
+
+                // Ensure the program exits after stopping
+                Environment.Exit(0);
+            }
+            else
+            {
+                Console.WriteLine("Program ended.");
             }
         }
 
@@ -134,10 +148,14 @@ namespace KinectSkeletonRecording
 
         static void StopRecording()
         {
-            recording = false;
-            sensor.Stop();
-            fileWriter.Close();
-            Console.WriteLine("Recording stopped. Data saved to CSV file.");
+            if (recording)
+            {
+                recording = false;
+                sensor.Stop();
+                fileWriter.Close();
+                Console.WriteLine("Recording stopped. Data saved to CSV file.");
+                return;
+            }
         }
 
         static double SecondsToMilliseconds(double seconds)

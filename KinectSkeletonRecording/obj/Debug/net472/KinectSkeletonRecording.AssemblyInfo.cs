@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("KinectSkeletonRecording")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e6d8fc63a8e2d354de3f1efbf9768c21d22a61a5")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+87df7af7ec6d20bf69e4ef0acd8e1cfa6c46c550")]
 [assembly: System.Reflection.AssemblyProductAttribute("KinectSkeletonRecording")]
 [assembly: System.Reflection.AssemblyTitleAttribute("KinectSkeletonRecording")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
