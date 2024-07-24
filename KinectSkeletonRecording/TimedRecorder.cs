@@ -11,6 +11,7 @@ namespace KinectSkeletonRecording
         static StreamWriter fileWriter;
         static Timer timer;
         static bool recording = false;
+        static bool isUnbounded = false;
 
         static void Main(string[] args)
         {
@@ -19,9 +20,18 @@ namespace KinectSkeletonRecording
             string csvFileName = Console.ReadLine() + ".csv";
 
             // Prompt for recording duration in seconds
-            Console.Write("Enter the recording duration in seconds: ");
-            double recordingDurationSeconds = Convert.ToDouble(Console.ReadLine());
-            double recordingDurationMilliseconds = SecondsToMilliseconds(recordingDurationSeconds);
+            Console.Write("Enter the recording duration in seconds (or type 'forever' for unbounded recording): ");
+            string input = Console.ReadLine().ToLower();
+            double recordingDurationMilliseconds = 0;
+
+            if (input == "forever")
+            {
+                isUnbounded = true;
+            }
+            else
+            {
+                recordingDurationMilliseconds = SecondsToMilliseconds(Convert.ToDouble(input));
+            }
 
             // Ask if the user wants to start recording
             Console.Write("Do you want to start recording? (y/n): ");
@@ -41,8 +51,15 @@ namespace KinectSkeletonRecording
 
             if (startRecording == "y")
             {
-                Console.WriteLine($"Recording duration: {recordingDurationSeconds} seconds.");
-                Console.WriteLine("Recording skeleton data to CSV...");
+                if (isUnbounded)
+                {
+                    Console.WriteLine("Recording skeleton data to CSV indefinitely...");
+                }
+                else
+                {
+                    double recordingDurationSeconds = recordingDurationMilliseconds / 1000;
+                    Console.WriteLine($"Recording duration: {recordingDurationSeconds} seconds.");
+                }
 
                 // Initialize Kinect Sensor
                 sensor = KinectSensor.KinectSensors[0];
@@ -83,11 +100,14 @@ namespace KinectSkeletonRecording
                     "HandTipRightX,HandTipRightY,HandTipRightZ," +
                     "ThumbRightX,ThumbRightY,ThumbRightZ,");
 
-                // Set up the timer
-                timer = new Timer(recordingDurationMilliseconds);
-                timer.Elapsed += TimerElapsed;
-                timer.AutoReset = false;
-                timer.Start();
+                // Set up the timer for bounded recording
+                if (!isUnbounded)
+                {
+                    timer = new Timer(recordingDurationMilliseconds);
+                    timer.Elapsed += TimerElapsed;
+                    timer.AutoReset = false;
+                    timer.Start();
+                }
 
                 // Set recording flag
                 recording = true;
