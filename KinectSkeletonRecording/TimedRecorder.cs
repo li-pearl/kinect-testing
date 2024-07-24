@@ -81,7 +81,7 @@ namespace KinectSkeletonRecording
                     "HandTipLeftX,HandTipLeftY,HandTipLeftZ," +
                     "ThumbLeftX,ThumbLeftY,ThumbLeftZ," +
                     "HandTipRightX,HandTipRightY,HandTipRightZ," +
-                    "ThumbRightX,ThumbRightY,ThumbRightZ");
+                    "ThumbRightX,ThumbRightY,ThumbRightZ,");
 
                 // Set up the timer
                 timer = new Timer(recordingDurationMilliseconds);
