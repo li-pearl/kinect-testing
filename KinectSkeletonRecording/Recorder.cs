@@ -39,6 +39,10 @@ namespace KinectSkeletonRecording
                 "HipLeftX,HipLeftY,HipLeftZ," +
                 "KneeLeftX,KneeLeftY,KneeLeftZ," +
                 "AnkleLeftX,AnkleLeftY,AnkleLeftZ," +
+                "FootLeftX,FootLeftY,FootLeftZ," +
+                "HipRightX,HipRightY,HipRightZ," +
+                "KneeRightX,KneeRightY,KneeRightZ," +
+                "AnkleRightX,AnkleRightY,AnkleRightZ," +
                 "FootRightX,FootRightY,FootRightZ," +
                 "SpineShoulderX,SpineShoulderY,SpineShoulderZ," +
                 "HandTipLeftX,HandTipLeftY,HandTipLeftZ," +

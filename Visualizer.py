@@ -3,13 +3,13 @@ import matplotlib.pyplot as plt
 import matplotlib.animation as animation
 
 # Load the CSV file
-data_file = 'SkeletonData.csv'
+data_file = r'C:\Users\anshi\code\pgss-folder\kinect-testing\KinectSkeletonRecording\SkeletonData.csv'
 data = pd.read_csv(data_file)
 
 # Create a figure and axis for the plot
 fig, ax = plt.subplots()
-ax.set_xlim(-2, 2)  # Adjust these limits based on your data range
-ax.set_ylim(-2, 2)  # Adjust these limits based on your data range
+ax.set_xlim(-2, 2)  
+ax.set_ylim(-2, 2) 
 ax.set_aspect('equal')
 
 # Initialize lists to store the joint positions
@@ -44,8 +44,8 @@ joint_positions = {
 
 def update_plot(frame):
     ax.clear()
-    ax.set_xlim(-2, 2)  # Adjust these limits based on your data range
-    ax.set_ylim(-2, 2)  # Adjust these limits based on your data range
+    ax.set_xlim(-2, 2) 
+    ax.set_ylim(-2, 2)  
     ax.set_aspect('equal')
 
     # Get the frame data
@@ -53,14 +53,14 @@ def update_plot(frame):
         return
     frame_data = data.iloc[frame]
 
-    # Plot each joint
-    for joint, index in joint_positions.items():
-        if joint in frame_data:
-            x = frame_data[f'{joint}X']
-            y = frame_data[f'{joint}Y']
-            ax.plot(x, y, 'o', label=joint)
-        else:
-            print(f"Missing data for {joint}")
+    # # Plot each joint
+    # for joint, index in joint_positions.items():
+    #     if joint in frame_data:
+    #         x = frame_data[f'{joint}X']
+    #         y = frame_data[f'{joint}Y']
+    #         ax.plot(x, y, 'o', label=joint)
+    #     else:
+    #         print(f"Missing data for {joint} at frame {frame}")
 
     # Draw lines between connected joints (e.g., spine, arms, legs)
     connections = [
@@ -68,9 +68,11 @@ def update_plot(frame):
         ('SpineMid', 'Neck'),
         ('Neck', 'Head'),
         ('ShoulderLeft', 'ElbowLeft'),
+        ('ShoulderLeft', 'Neck'),
         ('ElbowLeft', 'WristLeft'),
         ('WristLeft', 'HandLeft'),
         ('ShoulderRight', 'ElbowRight'),
+        ('ShoulderRight', 'Neck'),
         ('ElbowRight', 'WristRight'),
         ('WristRight', 'HandRight'),
         ('HipLeft', 'KneeLeft'),
@@ -81,7 +83,9 @@ def update_plot(frame):
         ('AnkleRight', 'FootRight'),
         ('SpineMid', 'SpineShoulder'),
         ('HandTipLeft', 'ThumbLeft'),
-        ('HandTipRight', 'ThumbRight')
+        ('HandTipRight', 'ThumbRight'),
+        ('SpineBase', 'HipLeft'),
+        ('SpineBase', 'HipRight')
     ]
 
     for start, end in connections:
@@ -96,6 +100,6 @@ def update_plot(frame):
     return lines
 
 # Set up the animation
-ani = animation.FuncAnimation(fig, update_plot, frames=len(data), interval=100, repeat=True)
+ani = animation.FuncAnimation(fig, update_plot, frames=len(data), interval=10, repeat=True)
 
 plt.show()
