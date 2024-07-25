@@ -150,7 +150,7 @@ namespace KinectSkeletonRecording
                 case JointTrackingState.Tracked:
                     return 1;
                 case JointTrackingState.Inferred:
-                    return 0.5;
+                    return 0;
                 default:
                     return 0;
             }
