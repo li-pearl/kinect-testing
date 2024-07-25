@@ -57,31 +57,31 @@ namespace KinectSkeletonRecording
 
                 // Write CSV header. The order matters for visualization and data processing!
                 fileWriter.WriteLine("Timestamp,TrackingID," +
-                    "SpineBaseX,SpineBaseY,SpineBaseZ," +
-                    "SpineMidX,SpineMidY,SpineMidZ," +
-                    "NeckX,NeckY,NeckZ," +
-                    "HeadX,HeadY,HeadZ," +
-                    "ShoulderLeftX,ShoulderLeftY,ShoulderLeftZ," +
-                    "ElbowLeftX,ElbowLeftY,ElbowLeftZ," +
-                    "WristLeftX,WristLeftY,WristLeftZ," +
-                    "HandLeftX,HandLeftY,HandLeftZ," +
-                    "ShoulderRightX,ShoulderRightY,ShoulderRightZ," +
-                    "ElbowRightX,ElbowRightY,ElbowRightZ," +
-                    "WristRightX,WristRightY,WristRightZ," +
-                    "HandRightX,HandRightY,HandRightZ," +
-                    "HipLeftX,HipLeftY,HipLeftZ," +
-                    "KneeLeftX,KneeLeftY,KneeLeftZ," +
-                    "AnkleLeftX,AnkleLeftY,AnkleLeftZ," +
-                    "FootLeftX,FootLeftY,FootLeftZ," +
-                    "HipRightX,HipRightY,HipRightZ," +
-                    "KneeRightX,KneeRightY,KneeRightZ," +
-                    "AnkleRightX,AnkleRightY,AnkleRightZ," +
-                    "FootRightX,FootRightY,FootRightZ," +
-                    "SpineShoulderX,SpineShoulderY,SpineShoulderZ," +
-                    "HandTipLeftX,HandTipLeftY,HandTipLeftZ," +
-                    "ThumbLeftX,ThumbLeftY,ThumbLeftZ," +
-                    "HandTipRightX,HandTipRightY,HandTipRightZ," +
-                    "ThumbRightX,ThumbRightY,ThumbRightZ,");
+                    "SpineBaseX,SpineBaseY,SpineBaseZ,SpineBaseConfidence," +
+                    "SpineMidX,SpineMidY,SpineMidZ,SpineMidConfidence," +
+                    "NeckX,NeckY,NeckZ,NeckConfidence," +
+                    "HeadX,HeadY,HeadZ,HeadConfidence," +
+                    "ShoulderLeftX,ShoulderLeftY,ShoulderLeftZ,ShoulderLeftConfidence," +
+                    "ElbowLeftX,ElbowLeftY,ElbowLeftZ,ElbowLeftConfidence," +
+                    "WristLeftX,WristLeftY,WristLeftZ,WristLeftConfidence," +
+                    "HandLeftX,HandLeftY,HandLeftZ,HandLeftConfidence," +
+                    "ShoulderRightX,ShoulderRightY,ShoulderRightZ,ShoulderRightConfidence," +
+                    "ElbowRightX,ElbowRightY,ElbowRightZ,ElbowRightConfidence," +
+                    "WristRightX,WristRightY,WristRightZ,WristRightConfidence," +
+                    "HandRightX,HandRightY,HandRightZ,HandRightConfidence," +
+                    "HipLeftX,HipLeftY,HipLeftZ,HipLeftConfidence," +
+                    "KneeLeftX,KneeLeftY,KneeLeftZ,KneeLeftConfidence," +
+                    "AnkleLeftX,AnkleLeftY,AnkleLeftZ,AnkleLeftConfidence," +
+                    "FootLeftX,FootLeftY,FootLeftZ,FootLeftConfidence," +
+                    "HipRightX,HipRightY,HipRightZ,HipRightConfidence," +
+                    "KneeRightX,KneeRightY,KneeRightZ,KneeRightConfidence," +
+                    "AnkleRightX,AnkleRightY,AnkleRightZ,AnkleRightConfidence," +
+                    "FootRightX,FootRightY,FootRightZ,FootRightConfidence," +
+                    "SpineShoulderX,SpineShoulderY,SpineShoulderZ,SpineShoulderConfidence," +
+                    "HandTipLeftX,HandTipLeftY,HandTipLeftZ,HandTipConfidence," +
+                    "ThumbLeftX,ThumbLeftY,ThumbLeftZ,ThumbLeftConfidence," +
+                    "HandTipRightX,HandTipRightY,HandTipRightZ,HandTipConfidence," +
+                    "ThumbRightX,ThumbRightY,ThumbRightZ,ThumbRightConfidence,");
 
                 // Set up the timer
                 timer = new Timer(recordingDurationMilliseconds);
@@ -130,7 +130,11 @@ namespace KinectSkeletonRecording
                             // Record the position of each joint
                             foreach (Joint joint in skel.Joints)
                             {
-                                fileWriter.Write($"{joint.Position.X},{joint.Position.Y},{joint.Position.Z},");
+                                JointTrackingState trackingState = joint.TrackingState;
+                                double confidence = GetConfidenceLevel(trackingState);
+
+                                fileWriter.Write($"{joint.Position.X},{joint.Position.Y},{joint.Position.Z}, {confidence},");
+                                
                             }
 
                             // Remove the trailing comma and add a newline
@@ -138,6 +142,17 @@ namespace KinectSkeletonRecording
                         }
                     }
                 }
+            }
+        }
+
+        static double GetConfidenceLevel(JointTrackingState trackingState) {
+            switch (trackingState) {
+                case JointTrackingState.Tracked:
+                    return 1;
+                case JointTrackingState.Inferred:
+                    return 0.5;
+                default:
+                    return 0;
             }
         }
 
