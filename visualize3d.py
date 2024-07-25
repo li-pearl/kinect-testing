@@ -5,7 +5,7 @@ from mpl_toolkits.mplot3d import Axes3D
 import matplotlib.animation as animation
 
 # Load the CSV file
-data_file = r'C:\Users\anshi\code\pgss-folder\kinect-testing\KinectSkeletonRecording\2_ld_whole_face.csv'
+data_file = r"C:\Users\anshi\code\pgss-folder\kinect-testing\new-occlusion-tests\Ogechi\1_oa_clear.csv"
 data = pd.read_csv(data_file)
 
 # Create a 3D figure and axis for the plot
