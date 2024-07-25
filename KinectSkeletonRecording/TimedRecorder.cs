@@ -131,7 +131,7 @@ namespace KinectSkeletonRecording
                             foreach (Joint joint in skel.Joints)
                             {
                                 JointTrackingState trackingState = joint.TrackingState;
-                                double confidence = GetConfidenceLevel(trackingState);
+                                int confidence = GetConfidenceLevel(trackingState);
 
                                 fileWriter.Write($"{joint.Position.X},{joint.Position.Y},{joint.Position.Z}, {confidence},");
                                 
@@ -145,7 +145,7 @@ namespace KinectSkeletonRecording
             }
         }
 
-        static double GetConfidenceLevel(JointTrackingState trackingState) {
+        static int GetConfidenceLevel(JointTrackingState trackingState) {
             switch (trackingState) {
                 case JointTrackingState.Tracked:
                     return 1;
